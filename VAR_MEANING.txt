@@ -43,3 +43,31 @@
 'sigma_per': 'Incertidumbre en el período orbital.',
 'class': 'Clasificación dinámica del objeto (por ejemplo, "AMO" para asteroides Amor, "APO" para asteroides Apolo, etc.).',
 'rms': 'Raíz cuadrática media de los residuos (medida del ajuste de la órbita).'
+
+
+# Variables categóricas
+    'id', 'spkid', 'full_name', 'pdes', 'name', 'prefix', 'neo', 'pha',
+    'orbit_id', 'epoch_cal', 'equinox', 'tp_cal', 'class'
+
+
+# Variables numéricas
+    'H', 'diameter', 'albedo', 'diameter_sigma', 'epoch', 'epoch_mjd',
+    'e', 'a', 'q', 'i', 'om', 'w', 'ma', 'ad', 'n', 'tp', 'per', 'per_y',
+    'moid', 'moid_ld', 'sigma_e', 'sigma_a', 'sigma_q', 'sigma_i',
+    'sigma_om', 'sigma_w', 'sigma_ma', 'sigma_ad', 'sigma_n', 'sigma_tp',
+    'sigma_per', 'rms'
+
+
+collision_risk_vars = [
+    'moid',        # Distancia mínima de intersección orbital
+    'pha',         # Indicador de asteroide potencialmente peligroso
+    'diameter',    # Diámetro estimado del objeto
+    'e',           # Excentricidad orbital
+    'a',           # Semieje mayor de la órbita
+    'i',           # Inclinación orbital
+    'om',          # Longitud del nodo ascendente
+    'w',           # Argumento del perihelio
+    'per',         # Período orbital (en días)
+    'per_y',       # Período orbital (en años)
+    'class'        # Clasificación dinámica del objeto
+]
