@@ -1,3 +1,1 @@
-# asteroid_prediction
-
-
+# Orbital Minimum Intersection Distance Analysis MOID
