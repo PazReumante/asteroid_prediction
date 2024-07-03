@@ -2,10 +2,14 @@
 
 El MOID (Minimum Orbit Intersection Distance) es una medida utilizada en astronomía para determinar la menor distancia entre las órbitas de dos cuerpos celestes, típicamente planetas, asteroides o cometas. Este parámetro es crucial para evaluar el riesgo de colisión potencial entre objetos espaciales y es fundamental en la predicción y seguimiento de objetos cercanos a la Tierra.
 
+![MOID](https://www.researchgate.net/figure/Conjunction-always-occurs-in-the-vicinity-of-points-of-closest-approach-between-orbits_fig3_311395113)
+
 Importancia del MOID
 
 a-.**Evaluación de Riesgo de Impacto**: La MOID es crucial para evaluar el riesgo de impacto de un objeto con la Tierra. Una MOID pequeña sugiere que en algún momento futuro, el objeto podría pasar cerca de la Tierra, lo que podría representar un riesgo de impacto.
+
 b-.**Planes de Mitigación**: Conocer la MOID ayuda a las agencias espaciales a desarrollar estrategias de mitigación para posibles impactos, como desviar el objeto o prepararse para una colisión.
+
 c-.**Monitoreo y Seguimiento**: Los astrónomos y las agencias espaciales utilizan la MOID para monitorear y rastrear objetos potencialmente peligrosos (PHA, Potentially Hazardous Asteroids).
 
 En el contexto de la base de datos MOID, el Análisis Exploratorio de Datos (EDA) se enfocará en las siguientes etapas:
@@ -25,66 +29,68 @@ Posteriormente, evaluaremos varios modelos de machine learning adecuados, ajusta
 Se trabajará con la siguiente base de datos:
 https://gitlab.com/mirsakhawathossain/pha-ml/-/raw/master/Dataset/dataset.csv
 
-En un breve resumen;
+En un breve resumen:
 
-```python
-import pandas as pd
+• La base de datos contiene 958.524 entradas con 45 variables, las cuales serán detalladas a continuación.
 
-# Carga de datos con el fin de mostrar 
-total_data = pd.read_csv("https://gitlab.com/mirsakhawathossain/pha-ml/-/raw/master/Dataset/dataset.csv")
+• Se dividirá en dataset en 5 partes con el fin de cumplir los parametros de almanecemiento de github.
 
-# Mostrar información sobre el conjunto de datos
-print(total_data.info())
+• Para el procesamiento de datos se cogerá una muestra aleatorio de 150.000 entradas con el propósito de optimizar el funcionamiento del código.
 
-En función de optimizar el procesamiento de datos se trabajará con una muestra de 150.000 entradas con las siguientes variables que se definen a continuación:
+• Se utilizará SQL para la creación de la muestra y como base de datos del desarrollo del proyecto.
 
 ### Descripción de Variables
 
-- ***id***: Identificador único del objeto.
-- ***spkid***: SPK-ID, un identificador único utilizado por el JPL de la NASA (Jet Propulsion Laboratory).
-- ***full_name***: Nombre completo o designación del objeto.
-- ***pdes***: Designación principal del objeto.
-- ***name***: Nombre común del objeto (si tiene).
-- ***prefix***: Prefijo del objeto (si tiene).
-- ***neo***: Indicador de si el objeto es un objeto cercano a la Tierra (NEO).
-- ***pha***: Indicador de si el objeto es un asteroide potencialmente peligroso (PHA).
-- ***H***: Magnitud absoluta (brillo) del objeto.
-- ***diameter***: Diámetro estimado del objeto (en kilómetros).
-- ***albedo***: Albedo (reflectividad) del objeto.
-- ***diameter_sigma***: Incertidumbre en la estimación del diámetro.
-- ***orbit_id***: Identificador de los datos orbitales utilizados.
-- ***epoch***: Época de los elementos orbitales (en Fecha Juliana).
-- ***epoch_mjd***: Época de los elementos orbitales (en Fecha Juliana Modificada).
-- ***epoch_cal***: Época de los elementos orbitales (en fecha de calendario).
-- ***equinox***: Equinoccio de los elementos orbitales.
-- ***e***: Excentricidad orbital.
-- ***a***: Semieje mayor (distancia promedio del sol, en unidades astronómicas).
-- ***q***: Distancia al perihelio (máxima aproximación al sol, en unidades astronómicas).
-- ***i***: Inclinación orbital (inclinación de la órbita en relación con la eclíptica, en grados).
-- ***om***: Longitud del nodo ascendente (en grados).
-- ***w***: Argumento del perihelio (en grados).
-- ***ma***: Anomalía media (en grados).
-- ***ad***: Distancia al afelio (distancia máxima del sol, en unidades astronómicas).
-- ***n***: Movimiento medio (tasa promedio de movimiento a lo largo de la órbita, en grados por día).
-- ***tp***: Tiempo del paso por el perihelio (en Fecha Juliana).
-- ***tp_cal***: Tiempo del paso por el perihelio (en fecha de calendario).
-- ***per***: Período orbital (tiempo para completar una órbita, en días).
-- ***per_y***: Período orbital (tiempo para completar una órbita, en años).
-- ***moid***: Distancia mínima de intersección de la órbita (distancia más cercana a la órbita de la Tierra, en unidades astronómicas).
-- ***moid_ld***: Distancia mínima de intersección de la órbita (en distancias lunares).
-- ***sigma_e***: Incertidumbre en la excentricidad orbital.
-- ***sigma_a***: Incertidumbre en el semieje mayor.
-- ***sigma_q***: Incertidumbre en la distancia al perihelio.
-- ***sigma_i***: Incertidumbre en la inclinación orbital.
-- ***sigma_om***: Incertidumbre en la longitud del nodo ascendente.
-- ***sigma_w***: Incertidumbre en el argumento del perihelio.
-- ***sigma_ma***: Incertidumbre en la anomalía media.
-- ***sigma_ad***: Incertidumbre en la distancia al afelio.
-- ***sigma_n***: Incertidumbre en el movimiento medio.
-- ***sigma_tp***: Incertidumbre en el tiempo del paso por el perihelio.
-- ***sigma_per***: Incertidumbre en el período orbital.
-- ***class***: Clasificación dinámica del objeto (por ejemplo, "AMO" para asteroides Amor, "APO" para asteroides Apolo, etc.).
-- ***rms***: Raíz cuadrática media de los residuos (medida del ajuste de la órbita).
+- **_id_**: Identificador único del objeto.
+- **_spkid_**: SPK-ID, un identificador único utilizado por el JPL de la NASA (Jet Propulsion Laboratory).
+- **_full\_name_**: Nombre completo o designación del objeto.
+- **_pdes_**: Designación principal del objeto.
+- **_name_**: Nombre común del objeto (si tiene).
+- **_prefix_**: Prefijo del objeto (si tiene).
+- **_neo_**: Indicador de si el objeto es un objeto cercano a la Tierra (NEO).
+- **_pha_**: Indicador de si el objeto es un asteroide potencialmente peligroso (PHA).
+- **_H_**: Magnitud absoluta (brillo) del objeto.
+- **_diameter_**: Diámetro estimado del objeto (en kilómetros).
+- **_albedo_**: Albedo (reflectividad) del objeto.
+- **_diameter\_sigma_**: Incertidumbre en la estimación del diámetro.
+- **_orbit\_id_**: Identificador de los datos orbitales utilizados.
+- **_epoch_**: Época de los elementos orbitales (en Fecha Juliana).
+- **_epoch\_mjd_**: Época de los elementos orbitales (en Fecha Juliana Modificada).
+- **_epoch\_cal_**: Época de los elementos orbitales (en fecha de calendario).
+- **_equinox_**: Equinoccio de los elementos orbitales.
+- **_e_**: Excentricidad orbital.
+- **_a_**: Semieje mayor (distancia promedio del sol, en unidades astronómicas).
+- **_q_**: Distancia al perihelio (máxima aproximación al sol, en unidades astronómicas).
+- **_i_**: Inclinación orbital (inclinación de la órbita en relación con la eclíptica, en grados).
+- **_om_**: Longitud del nodo ascendente (en grados).
+- **_w_**: Argumento del perihelio (en grados).
+- **_ma_**: Anomalía media (en grados).
+- **_ad_**: Distancia al afelio (distancia máxima del sol, en unidades astronómicas).
+- **_n_**: Movimiento medio (tasa promedio de movimiento a lo largo de la órbita, en grados por día).
+- **_tp_**: Tiempo del paso por el perihelio (en Fecha Juliana).
+- **_tp\_cal_**: Tiempo del paso por el perihelio (en fecha de calendario).
+- **_per_**: Período orbital (tiempo para completar una órbita, en días).
+- **_per\_y_**: Período orbital (tiempo para completar una órbita, en años).
+- **_moid_**: Distancia mínima de intersección de la órbita (distancia más cercana a la órbita de la Tierra, en unidades astronómicas).
+- **_moid\_ld_**: Distancia mínima de intersección de la órbita (en distancias lunares).
+- **_sigma\_e_**: Incertidumbre en la excentricidad orbital.
+- **_sigma\_a_**: Incertidumbre en el semieje mayor.
+- **_sigma\_q_**: Incertidumbre en la distancia al perihelio.
+- **_sigma\_i_**: Incertidumbre en la inclinación orbital.
+- **_sigma\_om_**: Incertidumbre en la longitud del nodo ascendente.
+- **_sigma\_w_**: Incertidumbre en el argumento del perihelio.
+- **_sigma\_ma_**: Incertidumbre en la anomalía media.
+- **_sigma\_ad_**: Incertidumbre en la distancia al afelio.
+- **_sigma\_n_**: Incertidumbre en el movimiento medio.
+- **_sigma\_tp_**: Incertidumbre en el tiempo del paso por el perihelio.
+- **_sigma\_per_**: Incertidumbre en el período orbital.
+- **_class_**: Clasificación dinámica del objeto (por ejemplo, "AMO" para asteroides Amor, "APO" para asteroides Apolo, etc.).
+- **_rms_**: Raíz cuadrática media de los residuos (medida del ajuste de la órbita).
+
+Después de realizar el EDA, se determino que se trabajará el entrenamiento de modelos con las siguientes variables, mostradas en este caso por su matriz de correlación:
+
+![Texto alternativo](https://drive.google.com/file/d/1-_RLS44PUdUxMtX8eYjDYa26svIX_40t/view?usp=drive_link)
+
 
 
  
