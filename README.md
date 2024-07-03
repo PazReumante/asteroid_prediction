@@ -32,8 +32,11 @@ https://gitlab.com/mirsakhawathossain/pha-ml/-/raw/master/Dataset/dataset.csv
 En un breve resumen:
 
 • La base de datos contiene 958.524 entradas con 45 variables, las cuales serán detalladas a continuación.
+
 • Se dividirá en dataset en 5 partes con el fin de cumplir los parametros de almanecemiento de github.
+
 • Para el procesamiento de datos se cogerá una muestra aleatorio de 150.000 entradas con el propósito de optimizar el funcionamiento del código.
+
 • Se utilizará SQL para la creación de la muestra y como base de datos del desarrollo del proyecto.
 
 ### Descripción de Variables
@@ -86,8 +89,7 @@ En un breve resumen:
 
 Después de realizar el EDA, se determino que se trabajará el entrenamiento de modelos con las siguientes variables, mostradas en este caso por su matriz de correlación:
 
-![Gráfica](matriz de correlacion - asteoride.png)
-
+![Texto alternativo](https://drive.google.com/file/d/1-_RLS44PUdUxMtX8eYjDYa26svIX_40t/view?usp=drive_link)
 
 
 
