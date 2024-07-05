@@ -2,7 +2,7 @@
 
 El MOID (Minimum Orbit Intersection Distance) es una medida utilizada en astronomía para determinar la menor distancia entre las órbitas de dos cuerpos celestes, típicamente planetas, asteroides o cometas. Este parámetro es crucial para evaluar el riesgo de colisión potencial entre objetos espaciales y es fundamental en la predicción y seguimiento de objetos cercanos a la Tierra.
 
-![MOID](https://www.researchgate.net/figure/Conjunction-always-occurs-in-the-vicinity-of-points-of-closest-approach-between-orbits_fig3_311395113)
+![MOID](https://github.com/PazReumante/asteroid_prediction/blob/main/Project/images/Minimum-Orbital-Intersection-Distance.png)
 
 Importancia del MOID
 
@@ -89,7 +89,7 @@ En un breve resumen:
 
 Después de realizar el EDA, se determino que se trabajará el entrenamiento de modelos con las siguientes variables, mostradas en este caso por su matriz de correlación:
 
-![](https://github.com/PazReumante/asteroid_prediction/blob/main/matriz%20de%20correlacion%20-%20asteoride.png)
+![](https://github.com/PazReumante/asteroid_prediction/blob/main/Project/images/matriz%20de%20correlacion%20-%20asteoride.png)
 
 
 
