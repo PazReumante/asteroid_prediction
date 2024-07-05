@@ -89,7 +89,7 @@ En un breve resumen:
 
 Después de realizar el EDA, se determino que se trabajará el entrenamiento de modelos con las siguientes variables, mostradas en este caso por su matriz de correlación:
 
-![Texto alternativo](https://drive.google.com/file/d/1-_RLS44PUdUxMtX8eYjDYa26svIX_40t/view?usp=drive_link)
+![](https://github.com/PazReumante/asteroid_prediction/blob/main/matriz%20de%20correlacion%20-%20asteoride.png)
 
 
 
