@@ -1,2 +1,3 @@
-Project/*.csv
 Project\asteroids_database.db
+Project/asteroids_database.db
+asteroids_database.db
