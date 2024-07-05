@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+Data/*.csv
+Project/*.csv
+explore_Ferreras.ipynb
+>>>>>>> e0f42c5cb52eac4437633cb5942f8388a77fbda7
 Project/asteroids_database.db
 Project/*.db
 C:\Users\loren\Documents\GitHub\asteroid_predict\asteroid_prediction\Project\asteroids_database.db
