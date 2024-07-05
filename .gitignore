@@ -1,4 +1,6 @@
 Data/*.csv
 Project/*.csv
 explore_Ferreras.ipynb
-Project\asteroids_database.db
+Project/asteroids_database.db
+Project/*.db
+C:\Users\loren\Documents\GitHub\asteroid_predict\asteroid_prediction\Project\asteroids_database.db
