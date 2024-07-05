@@ -1,4 +1,2 @@
-Data/*.csv
 Project/*.csv
-explore_Ferreras.ipynb
 Project\asteroids_database.db
