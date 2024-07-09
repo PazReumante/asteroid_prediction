@@ -18,9 +18,38 @@ def load_data(file_name):
 train = load_data('clean_train.csv')
 test = load_data('clean_test.csv')
 
-st.title("Calculadora y Predicción de MOID")
+st.title("Predicción de la distancia mínima de intersección orbital MOID")
 
-st.sidebar.header("Seleccione las características para la predicción de test.csv")
+# Información adicional después del título
+st.markdown("""
+Esta aplicación permite calcular y predecir el MOID (Minimum Orbit Intersection Distance) de asteroides basándose en sus caracteristicas claves. Te dejamos aquí 
+una breve descripción de cada una de ellas:
+""")
+
+st.title("Haz click y revela la definición de cada una de las variables:")
+
+# Definir descripciones de las variables
+descriptions = {
+    'H': 'Magnitud absoluta, se refiere al brillo, lo que refiere si es objeto es visible o no.',
+    'a': 'Semieje mayor es la distancia promedio del sol, en unidades astronómicas.',
+    'q': 'Distancia al perihelio refiere a la máxima aproximación al sol, en unidades astronómicas.',
+    'ad': 'Distancia al afelio, distancia máxima del sol, en unidades astronómicas.',
+    'n': 'Movimiento medio es la tasa promedio de movimiento a lo largo de la órbita, en grados por día',
+    'tp_cal': 'Tiempo del paso por el perihelio, en fecha de calendario.',
+    'per_y': 'Período orbital',
+    'class_n': 'Tipo de asteroide, con ID númerico'
+}
+
+# Crear 8 columnas para organizar los botones de manera horizontal
+cols = st.columns(8)
+
+# Crear los 8 botones dentro de las columnas
+for i, var in enumerate(descriptions):
+    if cols[i].button(f"{var}"):
+        st.write(f"**{var}**: {descriptions[var]}")
+
+
+st.sidebar.header("Seleccione las características para la predicción:")
 
 # Definir descripciones de las variables
 descriptions = {
@@ -28,10 +57,10 @@ descriptions = {
     'a': 'Semieje mayor (UA)',
     'q': 'Perihelio (UA)',
     'ad': 'Afelio (UA)',
-    'n': 'Media anomalía diaria (grados/día)',
-    'tp_cal': 'Tiempo de paso cercano calculado (JD)',
-    'per_y': 'Período orbital (años)',
-    'class_n': 'Tipo de asteroide (numérico)'
+    'n': 'Media anomalía diaria',
+    'tp_cal': 'Tiempo de paso cercano calculado',
+    'per_y': 'Período orbital',
+    'class_n': 'Tipo de asteroide'
 }
 
 # Crear sliders para cada variable seleccionada con su descripción
