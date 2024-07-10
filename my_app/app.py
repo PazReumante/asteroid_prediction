@@ -4,6 +4,28 @@ import numpy as np
 import joblib
 import matplotlib.pyplot as plt
 
+
+st.set_page_config(
+    page_title="Aplicación con varias páginas",
+    page_icon="📚",
+)
+
+st.sidebar.title("Navegación")
+st.sidebar.header("Páginas")
+
+# Función para cargar las páginas
+def load_page(page_name):
+    if page_name == "Página 1":
+        import pages.page1
+    elif page_name == "Página 2":
+        import pages.page2
+
+# Selector de páginas en la barra lateral
+page = st.sidebar.selectbox("Selecciona una página", ["Página 1", "Página 2"])
+
+load_page(page)
+
+
 # Configurar la página Streamlit (debe ser la primera llamada de Streamlit en tu script)
 st.set_page_config(page_title="Calculadora y Predicción de MOID", layout="centered")
 
