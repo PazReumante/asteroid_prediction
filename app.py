@@ -7,6 +7,19 @@ import joblib
 # Configurar la página Streamlit
 st.set_page_config(page_title="Mi Aplicación", page_icon=":gráfico_de_barras:", layout="wide")
 
+# CSS para la imagen de fondo
+page_bg_img = '''
+<style>
+body {
+    background-image: url("https://example.com/your-image.jpg");
+    background-size: cover;
+}
+</style>
+'''
+
+# Cargar el CSS en Streamlit
+st.markdown(page_bg_img, unsafe_allow_html=True)
+
 # Cargar el modelo entrenado
 model = joblib.load('moid_model.pkl')
 
