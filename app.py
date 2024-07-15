@@ -5,14 +5,17 @@ import matplotlib.pyplot as plt
 import joblib
 
 # Configurar la página Streamlit
-st.set_page_config(page_title="Mi Aplicación", page_icon=":gráfico_de_barras:", layout="wide")
+st.set_page_config(page_title="Mi Aplicación", page_icon=":bar_chart:", layout="wide")
 
-# CSS para la imagen de fondo
+# HTML y CSS para la imagen de fondo
 page_bg_img = '''
 <style>
-body {
-    background-image: url("https://example.com/your-image.jpg");
+.stApp {
+    background-image: url("https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/mqyjorG-solar-system-backgrounds.jpg");
     background-size: cover;
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 </style>
 '''
@@ -21,7 +24,7 @@ body {
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Cargar el modelo entrenado
-model = joblib.load('moid_model.pkl')
+model = joblib.load('moidmodel.pkl')
 
 # Cargar los datos desde clean_test.csv
 @st.cache_data(persist=True)
@@ -36,28 +39,34 @@ def pagina_1():
     st.markdown(
         """
         El MOID (Minimum Orbit Intersection Distance) es una medida utilizada en astronomía para determinar la menor distancia entre las órbitas de dos cuerpos celestes, típicamente planetas, asteroides o cometas. Este parámetro es crucial para evaluar el riesgo de colisión potencial entre objetos espaciales y es fundamental en la predicción y seguimiento de objetos cercanos a la Tierra.
-
-        ![MOID](https://github.com/PazReumante/asteroid_prediction/blob/main/Project/images/Minimum-Orbital-Intersection-Distance.png)
         """
     )
 
-    if st.button("Mostrar Importancia del MOID"):
+    if st.button("Importancia del MOID"):
         mostrar_importancia()
+
+    if st.button("Database Info"):
+        mostrar_database_info()
 
 def mostrar_importancia():
     st.markdown(
         """
-        ## Importancia del MOID
+        #### Importancia del MOID
 
-        ### a. Evaluación de Riesgo de Impacto
+        #### a. Evaluación de Riesgo de Impacto
         La MOID es crucial para evaluar el riesgo de impacto de un objeto con la Tierra. Una MOID pequeña sugiere que en algún momento futuro, el objeto podría pasar cerca de la Tierra, lo que podría representar un riesgo de impacto.
 
-        ### b. Planes de Mitigación
+        #### b. Planes de Mitigación
         Conocer la MOID ayuda a las agencias espaciales a desarrollar estrategias de mitigación para posibles impactos, como desviar el objeto o prepararse para una colisión.
 
-        ### c. Monitoreo y Seguimiento
+        #### c. Monitoreo y Seguimiento
         Los astrónomos y las agencias espaciales utilizan la MOID para monitorear y rastrear objetos potencialmente peligrosos (PHA, Potentially Hazardous Asteroids).
+        """
+    )
 
+def mostrar_database_info():
+    st.markdown(
+        """
         En el contexto de la base de datos MOID, el Análisis Exploratorio de Datos (EDA) se enfocará en las siguientes etapas:
 
         1. **Exploración de Variables**: Se estudiarían las variables relevantes relacionadas con las órbitas de los cuerpos celestes, como las coordenadas orbitales, las velocidades relativas y el MOID entre diferentes objetos.
@@ -72,7 +81,7 @@ def mostrar_importancia():
 
         Posteriormente, evaluaremos varios modelos de machine learning adecuados, ajustaremos sus hiperparámetros mediante validación cruzada, y finalmente interpretaremos y seleccionaremos el modelo más apropiado basándonos en métricas de evaluación establecidas. Este enfoque garantizará que el modelo elegido se adapte eficazmente a las necesidades específicas del proyecto, maximizando su rendimiento y utilidad práctica.
 
-        ### Se trabajará con la siguiente base de datos:
+        #### Se trabajará con la siguiente base de datos:
         [Dataset MOID](https://gitlab.com/mirsakhawathossain/pha-ml/-/raw/master/Dataset/dataset.csv)
 
         En un breve resumen:
@@ -80,6 +89,9 @@ def mostrar_importancia():
         - Se dividirá en dataset en 5 partes con el fin de cumplir los parámetros de almacenamiento de github.
         - Para el procesamiento de datos se cogerá una muestra aleatoria de 150.000 entradas con el propósito de optimizar el funcionamiento del código.
         - Se utilizará SQL para la creación de la muestra y como base de datos del desarrollo del proyecto.
+
+        #### Visita el repositorio completo en el siguiente enlace:
+        [Repositorio](https://github.com/PazReumante/asteroid_prediction)
         """
     )
 
@@ -92,12 +104,12 @@ def Moid_prediction():
 
     # Definir descripciones de las variables
     descriptions = {
-        'H': 'Magnitud absoluta, se refiere al brillo, lo que refiere si es objeto es visible o no.',
-        'a': 'Semieje mayor es la distancia promedio del sol, en unidades astronómicas.',
-        'q': 'Distancia al perihelio refiere a la máxima aproximación al sol, en unidades astronómicas.',
-        'ad': 'Distancia al afelio, distancia máxima del sol, en unidades astronómicas.',
-        'n': 'Movimiento medio es la tasa promedio de movimiento a lo largo de la órbita, en grados por día',
-        'tp_cal': 'Tiempo del paso por el perihelio, en fecha de calendario.',
+        'H': 'Magnitud absoluta',
+        'a': 'Semieje mayor',
+        'q': 'Distancia al perihelio',
+        'ad': 'Distancia al afelio',
+        'n': 'Movimiento medio',
+        'tp_cal': 'Tiempo del paso por el perihelio',
         'per_y': 'Período orbital',
         'class_n': 'Tipo de asteroide, con ID numérico'
     }
