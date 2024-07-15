@@ -11,7 +11,7 @@ st.set_page_config(page_title="Mi Aplicación", page_icon=":gráfico_de_barras:"
 model = joblib.load('moid_model.pkl')
 
 # Cargar los datos desde clean_test.csv
-@st.cache(persist=True)
+@st.cache_data(persist=True)
 def load_data(file_name):
     return pd.read_csv(file_name)
 
