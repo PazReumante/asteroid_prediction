@@ -1,75 +1,209 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 import joblib
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+import seaborn as sns
+import time
 
 # Configuración de la página
-st.set_page_config(page_title="Mi Aplicación", page_icon=":bar_chart:", layout="wide")
+st.set_page_config(
+    page_title="Predicción de Colisión de Asteroides",
+    page_icon=":rocket:",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+
+# Estilo para el fondo del espacio exterior y componentes
+
+st.markdown(
+    """
+    <style>
+    /* Fondo del espacio exterior */
+    .reportview-container {
+        background: radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 45%, rgba(0,0,0,0.2) 100%);
+        background-size: 100% 300px;
+        background-position: 0% 100%;
+        color: #ffffff;
+    }
+
+    /* Estrellas y galaxias */
+    .reportview-container:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 100%);
+        background-size: 100% 100%;
+        opacity: 0.5;
+    }
+
+    /* Nebulosa */
+    .reportview-container:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(128,128,255,0.2) 0%, rgba(128,128,255,0.5) 50%, rgba(128,128,255,0.2) 100%);
+        background-size: 100% 100%;
+        opacity: 0.3;
+    }
+
+    /* Resto de estilos */
+    .sidebar.sidebar-content {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.5));
+        padding: 20px;
+        border-radius: 10px;
+        color: #ffffff;
+    }
+
+    .stButton > button {
+        background-color: #ffcc00;
+        color: #333333;
+        border-radius: 5px;
+        font-weight: bold;
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .stButton > button:hover {
+        background-color: #e6b800;
+        color: #ffffff;
+        cursor: pointer;
+        box-shadow: 0px 4px 8px rgba(0,0,0,0.4);
+    }
+
+    .stSelectbox,.stTextInput {
+        background-color: #000000;
+        color: #ffffff;
+        border-radius: 5px;
+        padding: 10px;
+        border: none;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .stMarkdown {
+        background-color: rgba(0,0,0,0.5);
+        color: #ffffff;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    .sidebar.sidebar-content.stButton > button {
+        width: 100%;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # Crear un menú de navegación en la barra lateral
-menu = st.sidebar.selectbox('Seleccione una página:', ['Página 1', 'Página 2', 'Página 3'])
+menu = st.sidebar.selectbox('Seleccione una página:', ['¿Sabías qué...?', 'Estadísticas de los Datos', 'Calculadora de Predicción de Colisión de Asteroide'])
 
-'''# Cargar el modelo entrenado
-model = joblib.load('moid_model.pkl')
+# Cargar el modelo entrenado
+@st.cache_resource
+def load_model():
+    return joblib.load('moid_model.pkl')
 
-# Cargar los datos desde clean_test.csv
+model = load_model()
+
+# Cargar los datos desde train.csv y test.csv
+@st.cache_data
 def load_data(file_name):
     return pd.read_csv(file_name)
 
-test = load_data('clean_test.csv')'''
+train = load_data('clean_train.csv')
+test = load_data('clean_test.csv')
+
+# Escalador
+scaler = StandardScaler()
+scaler.fit(train.drop(columns=['moid']))
+
+# Función para realizar predicciones
+def predict_collision(data, model, scaler):
+    data_scaled = scaler.transform(data)
+    prediction = model.predict(data_scaled)
+    return prediction
+
+# Formulario para la entrada de datos del usuario
+def user_input_features():
+    st.sidebar.header("Seleccione las características para la predicción")
+    H = st.sidebar.number_input("Magnitud Absoluta (H)", min_value=0.0, max_value=100.0, value=16.9, step=0.1)
+    a = st.sidebar.number_input("Eje Semi-Mayor (a)", min_value=0.0, max_value=100.0, value=3.066, step=0.001)
+    q = st.sidebar.number_input("Distancia del Perihelio (q)", min_value=0.0, max_value=100.0, value=2.390, step=0.001)
+    ad = st.sidebar.number_input("Distancia del Afelio (ad)", min_value=0.0, max_value=100.0, value=3.843, step=0.001)
+    n = st.sidebar.number_input("Movimiento Medio (n)", min_value=0.0, max_value=10.0, value=0.24, step=0.001)
+    tp_cal = st.sidebar.number_input("Tiempo de Paso por el Perihelio (tp_cal)", min_value=0.0, max_value=1e8, value=2.019578e7, step=1.0)
+    per_y = st.sidebar.number_input("Período Orbital (per_y)", min_value=0.0, max_value=1e8, value=47.82621, step=0.01)
+    class_options = [str(i) for i in range(13)]  # Creando las opciones de la clase como cadenas
+    class_n = st.sidebar.selectbox("Clasificación del Asteroide (class_n)", options=class_options, index=0)
+    
+    data = {
+        'H': H,
+        'a': a,
+        'q': q,
+        'ad': ad,
+        'n': n,
+        'tp_cal': tp_cal,
+        'per_y': per_y,
+        'class_n': int(class_n)  # Convertir la selección a entero
+    }
+    features = pd.DataFrame(data, index=[0])
+    return features
 
 # Definir el contenido de cada página
-def pagina_1():
-    st.title('Database Information')
-    st.write('El MOID (Minimum Orbit Intersection Distance) es una medida utilizada en astronomía para determinar la menor distancia entre las órbitas de dos cuerpos celestes, típicamente planetas, asteroides o cometas. Este parámetro es crucial para evaluar el riesgo de colisión potencial entre objetos espaciales y es fundamental en la predicción y seguimiento de objetos cercanos a la Tierra.')
-    st.write('[MOID](https://github.com/PazReumante/asteroid_prediction/blob/main/Project/images/Minimum-Orbital-Intersection-Distance.png)')
-def pagina_2():
-    st.title('Página 2')
-    st.markdown(
-        """
-        ## Importancia del MOID
+def main_page():
+    st.title("Peligrosidad de los asteroides")
+    st.write("¿Sabías que la peligrosidad de un asteroide en la Tierra depende de variables distintas a su diámetro?")
+    st.write("Cada poco tiempo vemos en diversos medios de comunicación noticias sobre asteroides potencialmente peligrosos para los terrícolas, pero…¿Son estás noticias falsas?¿De qué depende que un asteroide nos haga daño?")
+    st.write("Estas preguntas nos ha llevado a querer estudiar estos cuerpos rocosos. Quizás con las respuestas a estas preguntas podamos salvar a la humanidad...¡Quién sabe!")
+    st.write("Sobre los asteroides")
 
-        ### a. Evaluación de Riesgo de Impacto
-        La MOID es crucial para evaluar el riesgo de impacto de un objeto con la Tierra. Una MOID pequeña sugiere que en algún momento futuro, el objeto podría pasar cerca de la Tierra, lo que podría representar un riesgo de impacto.
+def page1():
+    st.title("Estadísticas de los Datos")
+    
+    st.subheader("Resumen Estadístico")
+    st.write(train.describe())
+    
+    st.subheader("Distribución de Variables")
+    var = st.selectbox("Selecciona una variable para visualizar su distribución", train.columns)
+    
+    fig, ax = plt.subplots()
+    sns.histplot(train[var], bins=20, kde=True, ax=ax)
+    ax.set_title(f'Distribución de {var}')
+    st.pyplot(fig)
 
-        ### b. Planes de Mitigación
-        Conocer la MOID ayuda a las agencias espaciales a desarrollar estrategias de mitigación para posibles impactos, como desviar el objeto o prepararse para una colisión.
+def page3():
+    st.title("Calculadora de Predicción de Colisión de Asteroide")
+    input_df = user_input_features()
 
-        ### c. Monitoreo y Seguimiento
-        Los astrónomos y las agencias espaciales utilizan la MOID para monitorear y rastrear objetos potencialmente peligrosos (PHA, Potentially Hazardous Asteroids).
+    # Mostrar los datos de entrada
+    st.subheader("Características de Entrada")
+    st.write(input_df)
 
-        En el contexto de la base de datos MOID, el Análisis Exploratorio de Datos (EDA) se enfocará en las siguientes etapas:
+    # Predicción
+    if st.button("Predecir Colisión"):
+        with st.spinner('Realizando predicción...'):  # Muestra un spinner mientras se realiza la predicción
+            time.sleep(2)  # Simulación de proceso de predicción
+            prediction = predict_collision(input_df, model, scaler)
+        
+        st.subheader("Resultado de la Predicción")
+        if prediction[0] <= 0.05:  # Asumiendo que un MOID <= 0.05 indica un posible impacto
+            st.error("¡Advertencia! El asteroide podría colisionar con la Tierra.")
+        else:
+            st.success("Es poco probable que el asteroide colisione con la Tierra.")
 
-        1. **Exploración de Variables**: Se estudiarían las variables relevantes relacionadas con las órbitas de los cuerpos celestes, como las coordenadas orbitales, las velocidades relativas y el MOID entre diferentes objetos.
-
-        2. **Análisis Estadístico**: Se aplicarían técnicas estadísticas para calcular medidas descriptivas como media, mediana, desviación estándar, así como para identificar tendencias y distribuciones de los datos.
-
-        3. **Visualización de Datos**: Se utilizarían gráficos y diagramas (como scatter plots, histogramas, y gráficos de densidad) para visualizar la distribución de los MOID y otras variables relevantes, facilitando la detección de patrones o agrupaciones.
-
-        4. **Identificación de Outliers**: Se buscarían valores atípicos que podrían indicar eventos de interés astronómico, como aproximaciones extremadamente cercanas entre órbitas.
-
-        5. **Correlaciones y Relaciones**: Se explorarían las relaciones entre las diferentes variables para entender cómo afectan los cambios en una variable a otra, especialmente en términos de riesgo de colisión o trayectorias próximas.
-
-        Posteriormente, evaluaremos varios modelos de machine learning adecuados, ajustaremos sus hiperparámetros mediante validación cruzada, y finalmente interpretaremos y seleccionaremos el modelo más apropiado basándonos en métricas de evaluación establecidas. Este enfoque garantizará que el modelo elegido se adapte eficazmente a las necesidades específicas del proyecto, maximizando su rendimiento y utilidad práctica.
-
-        ### Se trabajará con la siguiente base de datos:
-        [Dataset MOID](https://gitlab.com/mirsakhawathossain/pha-ml/-/raw/master/Dataset/dataset.csv)
-
-        En un breve resumen:
-        - La base de datos contiene 958.524 entradas con 45 variables, las cuales serán detalladas a continuación.
-        - Se dividirá en dataset en 5 partes con el fin de cumplir los parámetros de almacenamiento de github.
-        - Para el procesamiento de datos se cogerá una muestra aleatoria de 150.000 entradas con el propósito de optimizar el funcionamiento del código.
-        - Se utilizará SQL para la creación de la muestra y como base de datos del desarrollo del proyecto.
-        """
-    )
-def pagina_3():
-    st.title('Página 3')
-    st.write('Contenido de la página 3.')
 # Llamar a la función correspondiente a la página seleccionada
-if menu == 'Página 1':
-    pagina_1()
-elif menu == 'Página 2':
-    pagina_2()
-elif menu == 'Página 3':
-    pagina_3()
+if menu == '¿Sabías qué...?':
+    main_page()
+elif menu == 'Estadísticas de los Datos':
+    page1()
+elif menu == 'Calculadora de Predicción de Colisión de Asteroide':
+    page3()
