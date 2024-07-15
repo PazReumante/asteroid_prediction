@@ -10,14 +10,14 @@ st.set_page_config(page_title="Mi Aplicación", page_icon=":bar_chart:", layout=
 # Crear un menú de navegación en la barra lateral
 menu = st.sidebar.selectbox('Seleccione una página:', ['Página 1', 'Página 2', 'Página 3'])
 
-# Cargar el modelo entrenado
+'''# Cargar el modelo entrenado
 model = joblib.load('moid_model.pkl')
 
 # Cargar los datos desde clean_test.csv
 def load_data(file_name):
     return pd.read_csv(file_name)
 
-test = load_data('clean_test.csv')
+test = load_data('clean_test.csv')'''
 
 # Definir el contenido de cada página
 def pagina_1():
