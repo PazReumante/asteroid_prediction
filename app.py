@@ -197,8 +197,12 @@ def page3():
         st.subheader("Resultado de la Predicción")
         if prediction[0] <= 0.05:  # Asumiendo que un MOID <= 0.05 indica un posible impacto
             if prediction[0] <= 0.05:  # Asumiendo que un MOID <= 0.05 indica un posible impacto
-                if prediction[0] <= 0.05:  # Asumiendo que un MOID <= 0.05 indica un posible impacto
-                    st.markdown("### **¡ADVERTENCIA DE COLISIÓN!** :rotating_light: :exclamation: **EL ASTEROIDE PUEDE COLISIONAR CON LA TIERRA**. **¡TOMA ACCIÓN INMEDIATA!** :warning:")
+                st.markdown(
+        """
+        <div style="color: red; font-weight: bold; font-size: 24px;">
+        (¡ADVERTENCIA DE COLISIÓN! ¡EL ASTEROIDE PUEDE COLISIONAR CON LA TIERRA! ¡TOMA ACCIÓN INMEDIATA!)
+        </div>
+        """, unsafe_allow_html=True)
     else:
         st.success("Es poco probable que el asteroide colisione con la Tierra.")
 
