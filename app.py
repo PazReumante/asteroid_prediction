@@ -194,17 +194,21 @@ def page3():
         with st.spinner('Realizando predicción...'):  # Muestra un spinner mientras se realiza la predicción
             time.sleep(2)  # Simulación de proceso de predicción
             prediction = predict_collision(input_df, model, scaler)
-        st.subheader("Resultado de la Predicción")
+        
         if prediction[0] <= 0.05:  # Asumiendo que un MOID <= 0.05 indica un posible impacto
-            if prediction[0] <= 0.05:  # Asumiendo que un MOID <= 0.05 indica un posible impacto
-                st.markdown(
+            st.markdown(
         """
-        <div style="color: red; font-weight: bold; font-size: 24px;">
-        (¡ADVERTENCIA DE COLISIÓN! ¡EL ASTEROIDE PUEDE COLISIONAR CON LA TIERRA! ¡TOMA ACCIÓN INMEDIATA!)
+        <div style='background-color:#f8d7da;padding:10px;border-radius:5px;color:#721c24;font-weight:bold;'>
+        ¡ADVERTENCIA DE COLISIÓN! 🚨: EL ASTEROIDE PUEDE COLISIONAR CON LA TIERRA  ¡TOMA ACCIÓN INMEDIATA! ⚠️
         </div>
         """, unsafe_allow_html=True)
-    else:
-        st.success("Es poco probable que el asteroide colisione con la Tierra.")
+        else:
+            st.markdown(
+        """
+        <div style='background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;font-weight:bold;'>
+        Es poco probable que el asteroide colisione con la Tierra.
+        </div>
+        """, unsafe_allow_html=True)
 
 
 # Llamar a la función correspondiente a la página seleccionada
