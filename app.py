@@ -5,6 +5,7 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import seaborn as sns
 import time
+from PIL import Image
 
 # Configuración de la página
 st.set_page_config(
@@ -161,25 +162,41 @@ def user_input_features():
 # Definir el contenido de cada página
 def main_page():
     st.title("Peligrosidad de los asteroides")
-    st.write("¿Sabías que la peligrosidad de un asteroide en la Tierra depende de variables distintas a su diámetro?")
-    st.write("Cada poco tiempo vemos en diversos medios de comunicación noticias sobre asteroides potencialmente peligrosos para los terrícolas, pero…¿Son estás noticias falsas?¿De qué depende que un asteroide nos haga daño?")
+    st.info(
+    """
+    ¿Sabías que la peligrosidad de un asteroide en la Tierra depende de variables distintas a su diámetro?
+    """,
+    icon="👾",)
+
+    st.write("Cada poco tiempo vemos en diversos medios de comunicación noticias sobre asteroides potencialmente peligrosos para los terrícolas, pero…¿Son estás noticias falsas? ¿De qué depende que un asteroide nos haga daño?")
     st.write("Estas preguntas nos ha llevado a querer estudiar estos cuerpos rocosos. Quizás con las respuestas a estas preguntas podamos salvar a la humanidad...¡Quién sabe!")
-    st.write("Sobre los asteroides")
+    st.write(
+    """Sobre los asteroides:
+
+    Son pequeños objetos rocosos que orbitan alrededor del Sol. La mayoría son más pequeños que los planetas, aunque algunos pueden tener cientos de kilómetros de diámetro. Se forman en diferentes lugares y a diferentes distancias del Sol, además su forma es irregular. El estudio de la composición de estas rocas espaciales nos da información de la historia de los planetas y del Sol.
+    """)
+    st.info(
+    """Curiosidades:
+    - Varias misiones espaciales de la NASA han volado y observado asteroides. La nave espacial NEAR Shoemaker aterrizó en Eros, un asteroide cerca de la Tierra, en 2001. 
+    - La nave espacial Dawn viajó al cinturón de asteroides en 2011. Orbitó y estudió el asteroide gigante Vesta y el planeta enano Ceres.
+    - En 2016, la NASA lanzó la nave espacial OSIRIS-REx para estudiar un asteroide cerca de la Tierra llamado Bennu. Después de estudiar a Bennu durante unos años, OSIRIS-REx recogió una muestra de polvo y rocas de la superficie del asteroide. OSIRIS-REx regresó a la Tierra en septiembre de 2023. Actualmente se estudia el polvo y las rocas que la nave recolectó.
+    """,
+    icon="✨")
+    st.write("Bibliografía:")
 
 def page1():
-    st.title("Estadísticas de los Datos")
-    
-    st.subheader("Resumen Estadístico")
-    st.write(train.describe())
-    
-    st.subheader("Distribución de Variables")
-    var = st.selectbox("Selecciona una variable para visualizar su distribución", train.columns)
-    
-    fig, ax = plt.subplots()
-    sns.histplot(train[var], bins=20, kde=True, ax=ax)
-    ax.set_title(f'Distribución de {var}')
-    st.pyplot(fig)
+    st.title("Exploración de los datos")
+    st.write("Partimos de una base de datos que contiene 45 características de 958524 asteroides. Al ser una base de datos tan grande, hemos cogido una muestra aleatoria de 150000 asteroides.")
+    st.write("¿Qué hemos visto?")
+    st.write("- La mayoría de asteroides no pasan cerca de la Tierra")
+    #image = Image.open("neo.png")
+    #st.image(image, caption="Imagen 1.Histograma neo-número de asteroides.", use_column_width=True)
+    st.write("- La mayoría de ellos son del cinturón de asteroides que se encuentra entre Marte y Júpiter")
+    st.write("- La mayoría de asteroides tienen un diámetro pequeño (<25 km) (adjuntar imagen)")
+    st.write("Entonces, ¿de qué depende la peligrosidad de un asteroide?")
+    st.write("Bibliografía:")
 
+    
 def page3():
     st.title("Calculadora de Predicción de Colisión de Asteroide")
     input_df = user_input_features()
@@ -203,7 +220,7 @@ def page3():
 # Llamar a la función correspondiente a la página seleccionada
 if menu == '¿Sabías qué...?':
     main_page()
-elif menu == 'Estadísticas de los Datos':
+elif menu == 'Exploración de los Datos':
     page1()
 elif menu == 'Calculadora de Predicción de Colisión de Asteroide':
     page3()
