@@ -140,46 +140,131 @@ def main_page():
 
 def page1():
     st.title("Exploración de los datos")
-    st.write("Partimos de una base de datos que contiene 45 características de 958524 asteroides. Al ser una base de datos tan grande, hemos cogido una muestra aleatoria de 150000 asteroides.")
-    st.write("¿Qué hemos visto?")
+    st.write(   
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">
+    Partimos de una base de datos que contiene 45 características de 958524 asteroides. Al ser una base de datos tan grande, hemos cogido una muestra aleatoria de 150000 asteroides.
+    """, unsafe_allow_html=True)
+    st.write(" ")
+    st.write(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;font-weight:bold;">
+    ¿Qué hemos visto?
+    """, unsafe_allow_html=True)
+    st.write(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">
     
-    st.write("- La mayoría de asteroides no pasan cerca de la Tierra, siendo neo el indicador si un objeto es cercano a la tierra, donde *Y refleja que el objeto está cercano a la tierra y N* que no existe riesgo de colisión.")
+    - La mayoría de asteroides no pasan cerca de la Tierra, siendo neo el indicador si un objeto es cercano a la tierra, donde *Y refleja que el objeto está cercano a la tierra y N* que no existe riesgo de colisión.
+    """,unsafe_allow_html=True)
     image_url = "https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/neo.png"
-    st.image(image_url, caption="Imagen 1. Histograma neo-número de asteroides.", width=500)
-
-    st.write("- La mayoría de ellos son del cinturón de asteroides que se encuentra entre Marte y Júpiter")
+    st.markdown(
+    f"""
+    <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="{image_url}" alt="imagen" style="border-radius: 10px; width: 60%;"/>
+    <p style="color: black; font-size: 16px;">
+    </div>
+    """, unsafe_allow_html=True)
+    st.write(
+    """
+    <h2 style='text-align: center; color: white; font-size: 15px;'>Imagen 1. Histograma neo-número de asteroides</h2>
+    """, unsafe_allow_html=True)
+    st.write(" ")
+    st.write(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">
+    - La mayoría de ellos son del cinturón de asteroides que se encuentra entre Marte y Júpiter
+    """, unsafe_allow_html=True)
     image_url = "https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/class.png"
-    st.image(image_url, caption="Imagen 2. Histograma clase del asteroide-número de asteroides", width=500)
-
-    st.write("- La mayoría de asteroides tienen un diámetro pequeño (<25 km) (adjuntar imagen)")
+    st.markdown(
+    f"""
+    <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="{image_url}" alt="imagen" style="border-radius: 10px; width: 60%;"/>
+    <p style="color: black; font-size: 16px;">
+    </div>
+    """, unsafe_allow_html=True)
+    st.write(
+    """
+    <h2 style='text-align: center; color: white; font-size: 15px;'>Imagen 2. Histograma clase del asteroide-número de asteroides</h2>
+    """, unsafe_allow_html=True)
+    st.write(" ")
+    st.write(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">
+    - La mayoría de asteroides tienen un diámetro pequeño (<25 km) (adjuntar imagen)
+    """, unsafe_allow_html=True)
     image_url = "https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/diameter.png"
-    st.image(image_url, caption="Imagen 3. Histograma diámetro-números de asteroides", width=500)
-
-    st.write("Entonces, ¿de qué depende la peligrosidad de un asteroide?")
-    
-    st.write("""
-             
+    st.markdown(
+    f"""
+    <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="{image_url}" alt="imagen" style="border-radius: 10px; width: 80%;"/>
+    <p style="color: black; font-size: 16px;">
+    </div>
+    """, unsafe_allow_html=True)
+    st.write(
+    """
+    <h2 style='text-align: center; color: white; font-size: 15px;'>Imagen 3. Histograma diámetro-números de asteroides</h2>
+    """, unsafe_allow_html=True)
+    st.write(" ")
+    st.write(
+    """
+     <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;font-weight:bold;">
+    Entonces, ¿de qué depende la peligrosidad de un asteroide?
+    """, unsafe_allow_html=True) 
+    st.write(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">        
     Para llegar a esta conclusión hemos elegido una variable objetivo llamada Moid. Es una variable que mide la distancia más cercana a la órbita de la Tierra. 
     Relacionando el resto de variables con ella y ayudándonos de una matriz de correlación (Imagen 4), hemos sacado las siguientes conclusiones: 
     - La distancia promedio al Sol (a) es la variable que mas influye en la distancia mas cercana a la Tierra (moid).
-    - La distancia máxima al sol (q), la máxima aproximación al Sol (q) , el tiempo que tarda en completar una órbita en años (per_y), la fecha de paso por el Sol (tp_cal) y la procedencia del asteroide (class_n) son variables que también influyen en la distancia mas cercana a la Tierra (moid)""")
+    - La distancia máxima al sol (q), la máxima aproximación al Sol (q) , el tiempo que tarda en completar una órbita en años (per_y), la fecha de paso por el Sol (tp_cal) y la procedencia del asteroide (class_n) son variables que también influyen en la distancia mas cercana a la Tierra (moid)
+    """, unsafe_allow_html=True)
     
-    st.write("Todas estas conclusiones tienen sentido ya que la gravedad del Sol influye en la trayectoria de estos objetos. Como se puede visualizar en la siguiente matrix de correlación:")
+    st.write(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">
+    Todas estas conclusiones tienen sentido ya que la gravedad del Sol influye en la trayectoria de estos objetos. Como se puede visualizar en la siguiente matrix de correlación:
+    """, unsafe_allow_html=True)
 
     image_url = "https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/corr_matrix.png"
-    st.image(image_url, caption="Imagen 4. Matriz de correlación.", width=500)
-
-    st.write("""
-                   **¿Qué problemas hemos encontrado?**
-    - Mucha cantidad de datos faltantes , por ejemplo, el diámetro y el albedo (propiedad que tiene cualquier cuerpo de reflejar la radiación que incide sobre él) del objeto. Al faltar el 85% de los datos y tener baja correlación con la variable objetivo, hemos prescindido de ellas.
-             """)
-    
-    st.info("""
-    - Visita el repositorio completo en el siguiente enlace:
-        [Repositorio](https://github.com/PazReumante/asteroid_prediction)
-    - Dataset completo
-        [Haz click aquí](https://gitlab.com/mirsakhawathossain/pha-ml/-/raw/master/Dataset/dataset.csv)
-        """)
+    st.markdown(
+    f"""
+    <div style="display: flex; flex-direction: column; align-items: center;">
+    <img src="{image_url}" alt="imagen" style="border-radius: 10px; width: 80%;"/>
+    <p style="color: black; font-size: 16px;">
+    </div>
+    """, unsafe_allow_html=True)
+    st.write(
+    """
+    <h2 style='text-align: center; color: white; font-size: 15px;'>Imagen 4. Matriz de correlación</h2>
+    """, unsafe_allow_html=True)
+    st.write(" ")
+    st.write(
+    """
+     <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;font-weight:bold;">
+    ¿Qué problemas hemos encontrado?
+    """, unsafe_allow_html=True)
+    st.markdown(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">
+    Mucha cantidad de datos faltantes , por ejemplo, el diámetro y el albedo (propiedad que tiene cualquier cuerpo de reflejar la radiación que incide sobre él). Al faltar el 85% de los datos y tener baja correlación con la variable objetivo, hemos prescindido de ellas.
+    """, unsafe_allow_html=True)
+    st.write(" ")
+    st.write(" ")
+    st.markdown(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:#808080; padding:10px; border-radius:5px;">
+        <p><a href="https://github.com/PazReumante/asteroid_prediction" style="color:;">Repositorio</a></p>
+    </div>
+    """, 
+    unsafe_allow_html=True)
+    st.markdown(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:#808080; padding:10px; border-radius:5px;">
+        <p><a href="https://gitlab.com/mirsakhawathossain/pha-ml/-/raw/master/Dataset/dataset.csv" style="color:;">Dataset</a></p>
+    </div>
+    """, 
+    unsafe_allow_html=True)
 
 def page3():
     st.title("Calculadora de Predicción de Colisión de Asteroide")
