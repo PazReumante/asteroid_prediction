@@ -190,9 +190,10 @@ def page3():
     
 # Predicción
     if st.button("Predecir Colisión"):
+        prediction = predict_collision(input_df, model, scaler)
         with st.spinner('Realizando predicción...'):  # Muestra un spinner mientras se realiza la predicción
             time.sleep(2)  # Simulación de proceso de predicción
-            prediction = predict_collision(input_df, model, scaler)
+            
         
         if prediction[0] <= 0.05:  # Asumiendo que un MOID <= 0.05 indica un posible impacto
             st.markdown(
