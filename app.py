@@ -184,32 +184,37 @@ def page1():
 def page3():
     st.title("Calculadora de Predicción de Colisión de Asteroide")
 
-# Definir descripciones de las variables
+    # Definir descripciones de las variables
     descriptions = {
-    'H': 'Magnitud absoluta: Imagina que *Asteroide X* está en un escenario brillante en el espacio, y la magnitud absoluta te dice cuánto brilla realmente, como si estuviera a 1 unidad astronómica (UA) del Sol y 1 UA de la Tierra. Es como si todos los asteroides tuvieran que brillar igual para ser comparados en un concurso de luces.',
-    
-    'a': 'Semieje mayor: Este es el "tamaño" promedio de la pista de carreras por la que *Asteroide X* viaja alrededor del Sol. Imagina una pista ovalada y el semieje mayor es la distancia más larga de un extremo al otro.',
-    
-    'q': 'Distancia al perihelio: Es como el "punto más cercano" en la pista de carreras de *Asteroide X* al Sol. Piensa en esto como el lugar en la pista donde el asteroide se acerca más al sol durante su recorrido.',
-    
-    'ad': 'Distancia al afelio: En contraste con el perihelio, el afelio es el "punto más lejano" en la pista de carreras de *Asteroide X* al Sol. Aquí es donde el asteroide se aleja al máximo durante su viaje.',
-    
-    'n': 'Movimiento medio: Este número te dice cuán rápido va *Asteroide X* en promedio en su pista de carreras. Si *Asteroide X* fuera un corredor, el movimiento medio sería su velocidad promedio a lo largo de la pista.',
-    
-    'tp_cal': 'Tiempo del paso por el perihelio: Es como el "momento exacto" en el que *Asteroide X* pasa por el punto más cercano al Sol. Imagínate un reloj espacial que te dice cuándo llega a ese punto específico en su pista.',
-    
-    'per_y': 'Período orbital: Este es el tiempo que tarda *Asteroide X* en dar una vuelta completa alrededor del Sol. Es como la duración de la carrera completa en la pista, medida en años.',
-    
-    'class_n': 'Tipo de asteroide, con ID numérico: Es como una etiqueta para *Asteroide X*, diciendo qué tipo de asteroide es y dándole un número para clasificarlo. Por ejemplo, puede ser un tipo "A" o "B" con un ID que ayuda a los astrónomos a identificarlo fácilmente.'
-}
+        'H': 'Magnitud absoluta: Imagina que *Asteroide X* está en un escenario brillante en el espacio, y la magnitud absoluta te dice cuánto brilla realmente, como si estuviera a 1 unidad astronómica (UA) del Sol y 1 UA de la Tierra. Es como si todos los asteroides tuvieran que brillar igual para ser comparados en un concurso de luces.',
+        
+        'a': 'Semieje mayor: Este es el "tamaño" promedio de la pista de carreras por la que *Asteroide X* viaja alrededor del Sol. Imagina una pista ovalada y el semieje mayor es la distancia más larga de un extremo al otro.',
+        
+        'q': 'Distancia al perihelio: Es como el "punto más cercano" en la pista de carreras de *Asteroide X* al Sol. Piensa en esto como el lugar en la pista donde el asteroide se acerca más al sol durante su recorrido.',
+        
+        'ad': 'Distancia al afelio: En contraste con el perihelio, el afelio es el "punto más lejano" en la pista de carreras de *Asteroide X* al Sol. Aquí es donde el asteroide se aleja al máximo durante su viaje.',
+        
+        'n': 'Movimiento medio: Este número te dice cuán rápido va *Asteroide X* en promedio en su pista de carreras. Si *Asteroide X* fuera un corredor, el movimiento medio sería su velocidad promedio a lo largo de la pista.',
+        
+        'tp_cal': 'Tiempo del paso por el perihelio: Es como el "momento exacto" en el que *Asteroide X* pasa por el punto más cercano al Sol. Imagínate un reloj espacial que te dice cuándo llega a ese punto específico en su pista.',
+        
+        'per_y': 'Período orbital: Este es el tiempo que tarda *Asteroide X* en dar una vuelta completa alrededor del Sol. Es como la duración de la carrera completa en la pista, medida en años.',
+        
+        'class_n': 'Tipo de asteroide, con ID numérico: Es como una etiqueta para *Asteroide X*, diciendo qué tipo de asteroide es y dándole un número para clasificarlo. Por ejemplo, puede ser un tipo "A" o "B" con un ID que ayuda a los astrónomos a identificarlo fácilmente.'
+    }
 
-#Crear 8 columnas para organizar los botones de manera horizontal
-    cols = st.columns(8)
+    # Crear un selectbox para elegir la variable
+    selected_var = st.selectbox("Selecciona una variable y revela su descripción:", list(descriptions.keys()))
 
-    # Crear los 8 botones dentro de las columnas
-    for i, var in enumerate(descriptions):
-        if cols[i].button(f"{var}"):
-            st.write(f"**{var}**: {descriptions[var]}")
+    # Mostrar la descripción correspondiente
+    if selected_var:
+        st.markdown(f"""
+        <div style="background-color: rgba(0, 0, 0, 0.7); color: white; padding: 10px; border-radius: 5px;">
+            <strong>{selected_var}</strong>: {descriptions[selected_var]}
+        </div>
+        """, unsafe_allow_html=True)
+
+
 
     input_df = user_input_features()
     # Mostrar los datos de entrada
