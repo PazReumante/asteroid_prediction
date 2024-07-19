@@ -84,37 +84,58 @@ def user_input_features():
 def main_page():
     st.title("Peligrosidad de los asteroides")
 
-    st.write(
+    st.markdown(
     """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">
     ¿Sabías que la peligrosidad de un asteroide en la Tierra depende de variables distintas a su diámetro?
-    """)
-
-    st.write("Cada poco tiempo vemos en diversos medios de comunicación noticias sobre asteroides potencialmente peligrosos para los terrícolas, pero…¿Son estás noticias falsas? ¿De qué depende que un asteroide nos haga daño?")
-    st.write("Estas preguntas nos ha llevado a querer estudiar estos cuerpos rocosos. Quizás con las respuestas a estas preguntas podamos salvar a la humanidad...¡Quién sabe!")
-    
-    st.write(
+    </div>
+    """, 
+    unsafe_allow_html=True)
+ 
+    st.markdown(
     """
-    ***Sobre los asteroides***:
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">
+    Cada poco tiempo vemos en diversos medios de comunicación noticias sobre asteroides potencialmente peligrosos para los terrícolas, pero…¿Son estás noticias falsas? ¿De qué depende que un asteroide nos haga daño?
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">  
+    Estas preguntas nos ha llevado a querer estudiar estos cuerpos rocosos. Quizás con las respuestas a estas preguntas podamos salvar a la humanidad...¡Quién sabe!")
+     </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">   
+    <h2> Sobre los asteroides: </h2>
 
     Son pequeños objetos rocosos que orbitan alrededor del Sol. La mayoría son más pequeños que los planetas, aunque algunos pueden tener cientos de kilómetros de diámetro. Se forman en diferentes lugares y a diferentes distancias del Sol, además su forma es irregular. El estudio de la composición de estas rocas espaciales nos da información de la historia de los planetas y del Sol.
     
-    """)
-    st.info(
-    """Curiosidades:
-    
-    ✦ Varias misiones espaciales de la NASA han volado y observado asteroides. La nave espacial NEAR Shoemaker aterrizó en Eros, un asteroide cerca de la Tierra, en 2001. 
+    """, unsafe_allow_html=True)
 
-    ✦ La nave espacial Dawn viajó al cinturón de asteroides en 2011. Orbitó y estudió el asteroide gigante Vesta y el planeta enano Ceres.
-
-    ✦ En 2016, la NASA lanzó la nave espacial OSIRIS-REx para estudiar un asteroide cerca de la Tierra llamado Bennu. Después de estudiar a Bennu durante unos años, OSIRIS-REx recogió una muestra de polvo y rocas de la superficie del asteroide. OSIRIS-REx regresó a la Tierra en septiembre de 2023. Actualmente se estudia el polvo y las rocas que la nave recolectó.
-
-    """)
-
-    st.info(
-        """
-    [Bibliografía]    https://spaceplace.nasa.gov/asteroid/sp/
+    st.markdown(
     """
-    )
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:white; padding:10px; border-radius:5px;">
+        <h2>Curiosidades:</h2>
+        <ul>
+            <li>Varias misiones espaciales de la NASA han volado y observado asteroides. La nave espacial NEAR Shoemaker aterrizó en Eros, un asteroide cerca de la Tierra, en 2001.</li>
+            <li>La nave espacial Dawn viajó al cinturón de asteroides en 2011. Orbitó y estudió el asteroide gigante Vesta y el planeta enano Ceres.</li>
+            <li>En 2016, la NASA lanzó la nave espacial OSIRIS-REx para estudiar un asteroide cerca de la Tierra llamado Bennu. Después de estudiar a Bennu durante unos años, OSIRIS-REx recogió una muestra de polvo y rocas de la superficie del asteroide. OSIRIS-REx regresó a la Tierra en septiembre de 2023. Actualmente se estudia el polvo y las rocas que la nave recolectó.</li>
+        </ul>
+    </div>
+    """, 
+    unsafe_allow_html=True)
+
+    st.markdown(
+    """
+    <div style="background-color:rgba(0, 0, 0, 0.7); color:#808080; padding:10px; border-radius:5px;">
+        <p><a href="https://spaceplace.nasa.gov/asteroid/sp/" style="color:;">Bibliografía</a></p>
+    </div>
+    """, 
+    unsafe_allow_html=True)
+
 
 
 def page1():
@@ -165,15 +186,23 @@ def page3():
 
 # Definir descripciones de las variables
     descriptions = {
-        'H': 'Magnitud absoluta',
-        'a': 'Semieje mayor',
-        'q': 'Distancia al perihelio',
-        'ad': 'Distancia al afelio',
-        'n': 'Movimiento medio',
-        'tp_cal': 'Tiempo del paso por el perihelio',
-        'per_y': 'Período orbital',
-        'class_n': 'Tipo de asteroide, con ID numérico'
-    }
+    'H': 'Magnitud absoluta: Imagina que *Asteroide X* está en un escenario brillante en el espacio, y la magnitud absoluta te dice cuánto brilla realmente, como si estuviera a 1 unidad astronómica (UA) del Sol y 1 UA de la Tierra. Es como si todos los asteroides tuvieran que brillar igual para ser comparados en un concurso de luces.',
+    
+    'a': 'Semieje mayor: Este es el "tamaño" promedio de la pista de carreras por la que *Asteroide X* viaja alrededor del Sol. Imagina una pista ovalada y el semieje mayor es la distancia más larga de un extremo al otro.',
+    
+    'q': 'Distancia al perihelio: Es como el "punto más cercano" en la pista de carreras de *Asteroide X* al Sol. Piensa en esto como el lugar en la pista donde el asteroide se acerca más al sol durante su recorrido.',
+    
+    'ad': 'Distancia al afelio: En contraste con el perihelio, el afelio es el "punto más lejano" en la pista de carreras de *Asteroide X* al Sol. Aquí es donde el asteroide se aleja al máximo durante su viaje.',
+    
+    'n': 'Movimiento medio: Este número te dice cuán rápido va *Asteroide X* en promedio en su pista de carreras. Si *Asteroide X* fuera un corredor, el movimiento medio sería su velocidad promedio a lo largo de la pista.',
+    
+    'tp_cal': 'Tiempo del paso por el perihelio: Es como el "momento exacto" en el que *Asteroide X* pasa por el punto más cercano al Sol. Imagínate un reloj espacial que te dice cuándo llega a ese punto específico en su pista.',
+    
+    'per_y': 'Período orbital: Este es el tiempo que tarda *Asteroide X* en dar una vuelta completa alrededor del Sol. Es como la duración de la carrera completa en la pista, medida en años.',
+    
+    'class_n': 'Tipo de asteroide, con ID numérico: Es como una etiqueta para *Asteroide X*, diciendo qué tipo de asteroide es y dándole un número para clasificarlo. Por ejemplo, puede ser un tipo "A" o "B" con un ID que ayuda a los astrónomos a identificarlo fácilmente.'
+}
+
 #Crear 8 columnas para organizar los botones de manera horizontal
     cols = st.columns(8)
 
