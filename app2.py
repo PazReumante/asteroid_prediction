@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import joblib
@@ -15,7 +14,7 @@ st.set_page_config(page_title="Mi Aplicación", page_icon=":bar_chart:", layout=
 page_bg_img = '''
 <style>
 .stApp {
-    background-image: url("https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/imagen.jpeg");
+    background-image: url("https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/AI%20IMPACT.jpg");
     background-size: cover;
     background-position: top left;
     background-repeat: no-repeat;
@@ -30,13 +29,11 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 # Crear un menú de navegación en la barra lateral de la app:
 menu = st.sidebar.selectbox('Seleccione una página:', ['¿Sabías qué...?', 'Exploración de datos', 'Calculadora de Predicción de Colisión de Asteroide'])
 
-# Cargar el modelo entrenado
+# Cargar el modelo entrenado:
 @st.cache_resource
 def load_model():
-    return joblib.load('moid_model.pkl')
-
+    return joblib.load('moidmodel.pkl')
 model = load_model()
-
 
 # Cargar los datos desde train.csv y test.csv:
 @st.cache_data
@@ -58,15 +55,15 @@ def predict_collision(data, model, scaler):
 # Formulario para la entrada de datos del usuario
 def user_input_features():
     st.sidebar.header("Seleccione las características para la predicción")
-    H = st.sidebar.number_input("Magnitud Absoluta (H)", min_value=0.0, max_value=100.0, value=22.0, step=0.1)
-    a = st.sidebar.number_input("Eje Semi-Mayor (a)", min_value=0.0, max_value=100.0, value=1.1, step=0.001)
-    q = st.sidebar.number_input("Distancia del Perihelio (q)", min_value=0.0, max_value=100.0, value=0.9, step=0.001)
-    ad = st.sidebar.number_input("Distancia del Afelio (ad)", min_value=0.0, max_value=100.0, value=1.3, step=0.001)
-    n = st.sidebar.number_input("Movimiento Medio (n)", min_value=0.0, max_value=10.0, value=0.9, step=0.001)
-    tp_cal = st.sidebar.number_input("Tiempo de Paso por el Perihelio (tp_cal)", min_value=0.0, max_value=1e8, value=2458800.5, step=1.0)
-    per_y = st.sidebar.number_input("Período Orbital (per_y)", min_value=0.0, max_value=1e8, value=1.1, step=0.01)
+    H = st.sidebar.number_input("Magnitud Absoluta (H)", min_value=0.0, max_value=100.0, value=16.9, step=0.1)
+    a = st.sidebar.number_input("Eje Semi-Mayor (a)", min_value=0.0, max_value=100.0, value=3.066, step=0.001)
+    q = st.sidebar.number_input("Distancia del Perihelio (q)", min_value=0.0, max_value=100.0, value=2.390, step=0.001)
+    ad = st.sidebar.number_input("Distancia del Afelio (ad)", min_value=0.0, max_value=100.0, value=3.843, step=0.001)
+    n = st.sidebar.number_input("Movimiento Medio (n)", min_value=0.0, max_value=10.0, value=0.24, step=0.001)
+    tp_cal = st.sidebar.number_input("Tiempo de Paso por el Perihelio (tp_cal)", min_value=0.0, max_value=1e8, value=2.019578e7, step=1.0)
+    per_y = st.sidebar.number_input("Período Orbital (per_y)", min_value=0.0, max_value=1e8, value=47.82621, step=0.01)
     class_options = [str(i) for i in range(13)]  # Creando las opciones de la clase como cadenas
-    class_n = st.sidebar.selectbox("Clasificación del Asteroide (class_n)", options=class_options, index=10)
+    class_n = st.sidebar.selectbox("Clasificación del Asteroide (class_n)", options=class_options, index=0)
     data = {
         'H': H,
         'a': a,
@@ -117,22 +114,45 @@ def main_page():
     )
 
 
+import streamlit as st
+
 def page1():
     st.title("Exploración de los datos")
     st.write("Partimos de una base de datos que contiene 45 características de 958524 asteroides. Al ser una base de datos tan grande, hemos cogido una muestra aleatoria de 150000 asteroides.")
     st.write("¿Qué hemos visto?")
     
-    st.write("- La mayoría de asteroides no pasan cerca de la Tierra, siendo neo el indicador si un objeto es cercano a la tierra, donde *Y refleja que el objeto está cercano a la tierra y N* que no existe riesgo de colisión.")
+    st.write("- La mayoría de asteroides no pasan cerca de la Tierra, siendo neo el indicador si un objeto es cercano a la tierra, donde ***Y*** refleja que el objeto está cercano a la tierra y ***N*** que no existe riesgo de colisión.")
     image_url = "https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/neo.png"
-    st.image(image_url, caption="Imagen 1. Histograma neo-número de asteroides.", width=500)
+    st.image(image_url, caption="Imagen 1. Histograma neo-número de asteroides.", use_column_width=True)
+    st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="neo.png" width="20px" style="border-radius: 5px;">
+    </div>
+    """, unsafe_allow_html=True
+    )
 
     st.write("- La mayoría de ellos son del cinturón de asteroides que se encuentra entre Marte y Júpiter")
     image_url = "https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/class.png"
-    st.image(image_url, caption="Imagen 2. Histograma clase del asteroide-número de asteroides", width=500)
+    st.image(image_url, caption="Imagen 2. Histograma clase del asteroide-número de asteroides", use_column_width=True)
+    st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="neo.png" width="20px" style="border-radius: 5px;">
+    </div>
+    """, unsafe_allow_html=True
+    )
 
     st.write("- La mayoría de asteroides tienen un diámetro pequeño (<25 km) (adjuntar imagen)")
     image_url = "https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/diameter.png"
-    st.image(image_url, caption="Imagen 3. Histograma diámetro-números de asteroides", width=500)
+    st.image(image_url, caption="Imagen 3. Histograma diámetro-números de asteroides", use_column_width=True)
+    st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="neo.png" width="20px" style="border-radius: 5px;">
+    </div>
+    """, unsafe_allow_html=True
+    )
 
     st.write("Entonces, ¿de qué depende la peligrosidad de un asteroide?")
     
@@ -143,13 +163,19 @@ def page1():
     - La distancia promedio al Sol (a) es la variable que mas influye en la distancia mas cercana a la Tierra (moid).
     - La distancia máxima al sol (q), la máxima aproximación al Sol (q) , el tiempo que tarda en completar una órbita en años (per_y), la fecha de paso por el Sol (tp_cal) y la procedencia del asteroide (class_n) son variables que también influyen en la distancia mas cercana a la Tierra (moid)""")
     
-    st.write("Todas estas conclusiones tienen sentido ya que la gravedad del Sol influye en la trayectoria de estos objetos. Como se puede visualizar en la siguiente matrix de correlación:")
+    st.write("Todas estas conclusiones tienen sentido ya que la gravedad del Sol influye en la trayectoria de estos objetos. Como se puede visualizar en la siguiente matrix de correlación:""")
 
-    image_url = "https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/corr_matrix.png"
-    st.image(image_url, caption="Imagen 4. Matriz de correlación.", width=500)
-
+    image_url = "https://raw.githubusercontent.com/PazReumante/asteroid_prediction/main/Project/images/corr matrix.png"
+    st.image(image_url, caption="Imagen 4. Matriz de correlación.", use_column_width=True)
+    st.markdown(
+    """
+    <div style="text-align: center;">
+        <img src="neo.png" width="20px" style="border-radius: 5px;">
+    </div>
+    """, unsafe_allow_html=True
+    )
     st.write("""
-                   **¿Qué problemas hemos encontrado?**
+             **¿Qué problemas hemos encontrado?**
     - Mucha cantidad de datos faltantes , por ejemplo, el diámetro y el albedo (propiedad que tiene cualquier cuerpo de reflejar la radiación que incide sobre él) del objeto. Al faltar el 85% de los datos y tener baja correlación con la variable objetivo, hemos prescindido de ellas.
              """)
     
@@ -187,28 +213,16 @@ def page3():
     st.subheader("Características de Entrada")
     st.write("""Estos son los parametros seleccionados, te deseamos suerte!""")
     st.write(input_df)
-    
-# Predicción
+    # Predicción
     if st.button("Predecir Colisión"):
         with st.spinner('Realizando predicción...'):  # Muestra un spinner mientras se realiza la predicción
             time.sleep(2)  # Simulación de proceso de predicción
             prediction = predict_collision(input_df, model, scaler)
-        
+        st.subheader("Resultado de la Predicción")
         if prediction[0] <= 0.05:  # Asumiendo que un MOID <= 0.05 indica un posible impacto
-            st.markdown(
-        """
-        <div style='background-color:#f8d7da;padding:10px;border-radius:5px;color:#721c24;font-weight:bold;'>
-        ¡ADVERTENCIA DE COLISIÓN! 🚨: EL ASTEROIDE PUEDE COLISIONAR CON LA TIERRA  ¡TOMA ACCIÓN INMEDIATA! ⚠️
-        </div>
-        """, unsafe_allow_html=True)
+            st.error("¡Advertencia! El asteroide podría colisionar con la Tierra.")
         else:
-            st.markdown(
-        """
-        <div style='background-color:#d4edda;padding:10px;border-radius:5px;color:#155724;font-weight:bold;'>
-        Es poco probable que el asteroide colisione con la Tierra.
-        </div>
-        """, unsafe_allow_html=True)
-
+            st.success("Es poco probable que el asteroide colisione con la Tierra.")
 
 # Llamar a la función correspondiente a la página seleccionada
 if menu == '¿Sabías qué...?':
