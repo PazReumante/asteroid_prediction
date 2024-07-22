@@ -39,15 +39,15 @@ model = load_model()
 
 
 # Cargar los datos desde train.csv y test.csv:
-@st.cache_data
-def load_data(file_name):
-    return pd.read_csv(file_name)
-train = load_data('clean_train.csv')
-test = load_data('clean_test.csv')
+#@st.cache_data
+#def load_data(file_name):
+#    return pd.read_csv(file_name)
+#train = load_data('clean_train.csv')
+#test = load_data('clean_test.csv')
 
 # Escalador
-scaler = StandardScaler()
-scaler.fit(train.drop(columns=['moid']))
+#scaler = StandardScaler()
+#scaler.fit(train.drop(columns=['moid']))
 
 # Función para realizar predicciones
 def predict_collision(data, model, scaler):
