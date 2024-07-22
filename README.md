@@ -44,5 +44,6 @@ Después de realizar el EDA, se determino que se trabajará el entrenamiento de 
 ![](https://github.com/PazReumante/asteroid_prediction/blob/main/Project/images/matriz%20de%20correlacion%20-%20asteoride.png)
 
 
+Enlace a la aplicación-> https://asteroid-prediction-31bu.onrender.com/
 
  
