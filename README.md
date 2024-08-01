@@ -1,49 +1,89 @@
-# Orbital Minimum Intersection Distance Analysis MOID - DATA SCIENCE PROJECT
+# Data Science Project Boilerplate
 
-El MOID (Minimum Orbit Intersection Distance) es una medida utilizada en astronomía para determinar la menor distancia entre las órbitas de dos cuerpos celestes, típicamente planetas, asteroides o cometas. Este parámetro es crucial para evaluar el riesgo de colisión potencial entre objetos espaciales y es fundamental en la predicción y seguimiento de objetos cercanos a la Tierra.
+This boilerplate is designed to kickstart data science projects by providing a basic setup for database connections, data processing, and machine learning model development. It includes a structured folder organization for your datasets and a set of pre-defined Python packages necessary for most data science tasks.
 
-![MOID](https://github.com/PazReumante/asteroid_prediction/blob/main/Project/images/Minimum-Orbital-Intersection-Distance.png)
+## Structure
 
-Importancia del MOID
+The project is organized as follows:
 
-a-.**Evaluación de Riesgo de Impacto**: La MOID es crucial para evaluar el riesgo de impacto de un objeto con la Tierra. Una MOID pequeña sugiere que en algún momento futuro, el objeto podría pasar cerca de la Tierra, lo que podría representar un riesgo de impacto.
-
-b-.**Planes de Mitigación**: Conocer la MOID ayuda a las agencias espaciales a desarrollar estrategias de mitigación para posibles impactos, como desviar el objeto o prepararse para una colisión.
-
-c-.**Monitoreo y Seguimiento**: Los astrónomos y las agencias espaciales utilizan la MOID para monitorear y rastrear objetos potencialmente peligrosos (PHA, Potentially Hazardous Asteroids).
-
-En el contexto de la base de datos MOID, el Análisis Exploratorio de Datos (EDA) se enfocará en las siguientes etapas:
-
-1-.**Exploración de Variables**: Se estudiarían las variables relevantes relacionadas con las órbitas de los cuerpos celestes, como las coordenadas orbitales, las velocidades relativas y el MOID entre diferentes objetos.
-
-2-.**Análisis Estadístico**: Se aplicarían técnicas estadísticas para calcular medidas descriptivas como media, mediana, desviación estándar, así como para identificar tendencias y distribuciones de los datos.
-
-3-.**Visualización de Datos**: Se utilizarían gráficos y diagramas (como scatter plots, histogramas, y gráficos de densidad) para visualizar la distribución de los MOID y otras variables relevantes, facilitando la detección de patrones o agrupaciones.
-
-4-.**Identificación de Outliers**: Se buscarían valores atípicos que podrían indicar eventos de interés astronómico, como aproximaciones extremadamente cercanas entre órbitas.
-
-5-.**Correlaciones y Relaciones**: Se explorarían las relaciones entre las diferentes variables para entender cómo afectan los cambios en una variable a otra, especialmente en términos de riesgo de colisión o trayectorias próximas.
-
-Posteriormente, evaluaremos varios modelos de machine learning adecuados, ajustaremos sus hiperparámetros mediante validación cruzada, y finalmente interpretaremos y seleccionaremos el modelo más apropiado basándonos en métricas de evaluación establecidas. Este enfoque garantizará que el modelo elegido se adapte eficazmente a las necesidades específicas del proyecto, maximizando su rendimiento y utilidad práctica.
-
-Se trabajará con la siguiente base de datos:
-https://gitlab.com/mirsakhawathossain/pha-ml/-/raw/master/Dataset/dataset.csv
-
-En un breve resumen:
-
-• La base de datos contiene 958.524 entradas con 45 variables, las cuales serán detalladas a continuación.
-
-• Se dividirá en dataset en 5 partes con el fin de cumplir los parametros de almanecemiento de github.
-
-• Para el procesamiento de datos se cogerá una muestra aleatorio de 150.000 entradas con el propósito de optimizar el funcionamiento del código.
-
-• Se utilizará SQL para la creación de la muestra y como base de datos del desarrollo del proyecto.
-
-Después de realizar el EDA, se determino que se trabajará el entrenamiento de modelos con las siguientes variables, mostradas en este caso por su matriz de correlación:
-
-![](https://github.com/PazReumante/asteroid_prediction/blob/main/Project/images/matriz%20de%20correlacion%20-%20asteoride.png)
-
-
-Enlace a la aplicación-> https://asteroid-prediction-31bu.onrender.com/
-
+- `app.py` - The main Python script that you run for your project.
+- `explore.py` - A notebook to explore data, play around, visualize, clean, etc. Ideally the notebook code should be migrated to the app.py when moving to production.
+- `utils.py` - This file contains utility code for operations like database connections.
+- `requirements.txt` - This file contains the list of necessary python packages.
+- `models/` - This directory should contain your SQLAlchemy model classes.
+- `data/` - This directory contains the following subdirectories:
+  - `interin/` - For intermediate data that has been transformed.
+  - `processed/` - For the final data to be used for modeling.
+  - `raw/` - For raw data without any processing.
  
+    
+## Setup
+
+**Prerequisites**
+
+Make sure you have Python 3.11+ installed on your. You will also need pip for installing the Python packages.
+
+**Installation**
+
+Clone the project repository to your local machine.
+
+Navigate to the project directory and install the required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+**Create a database (if needed)**
+
+Create a new database within the Postgres engine by customizing and executing the following command: `$ createdb -h localhost -U <username> <db_name>`
+Connect to the Postgres engine to use your database, manipulate tables and data: `$ psql -h localhost -U <username> <db_name>`
+NOTE: Remember to check the ./.env file information to get the username and db_name.
+
+Once you are inside PSQL you will be able to create tables, make queries, insert, update or delete data and much more!
+
+**Environment Variables**
+
+Create a .env file in the project root directory to store your environment variables, such as your database connection string:
+
+```makefile
+DATABASE_URL="your_database_connection_url_here"
+```
+
+## Running the Application
+
+To run the application, execute the app.py script from the root of the project directory:
+
+```bash
+python app.py
+```
+
+## Adding Models
+
+To add SQLAlchemy model classes, create new Python script files inside the models/ directory. These classes should be defined according to your database schema.
+
+Example model definition (`models/example_model.py`):
+
+```py
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
+
+Base = declarative_base()
+
+class ExampleModel(Base):
+    __tablename__ = 'example_table'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+
+```
+
+## Working with Data
+
+You can place your raw datasets in the data/raw directory, intermediate datasets in data/interim, and the processed datasets ready for analysis in data/processed.
+
+To process data, you can modify the app.py script to include your data processing steps, utilizing pandas for data manipulation and analysis.
+
+## Contributors
+
+This template was built as part of the 4Geeks Academy [Data Science and Machine Learning Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about [4Geeks Academy's BootCamp programs](https://4geeksacademy.com/us/programs) here.
+
+Other templates and resources like this can be found on the school GitHub page.
